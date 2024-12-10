@@ -1,5 +1,5 @@
-build/
-root
+buildroot/
+release/
 KoboRoot.tgz
 *~
 
