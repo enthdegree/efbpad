@@ -1,16 +1,18 @@
 TARGETS = armcheck libfbink fbpad/fbpad kbreader/kbreader fbpad_mkfn/mkfn install
-PLATFORM = pocketbook
 
 all: $(TARGETS)
 
 armcheck:
 ifeq (,$(findstring arm-,$(CROSS_TC)))
-	$(error Set up a CC toolchain (e.g. for NiLuJe `source koxtoolchain/refs/x-compile.sh pocketbook env`))
+	$(error Set up a CC toolchain (e.g. for NiLuJe `source koxtoolchain/refs/x-compile.sh kobo env`))
 endif
 
 libfbink: 
-	$(PLATFORM)=1 make -C FBInk/ shared fbdepth 
-	$(PLATFORM)=1 make -C FBInk/ install DESTDIR=$(shell pwd)/buildroot
+	mkdir -p ./build ; \
+	MINIMAL=1 BITMAP=1 make -C FBInk/ kobo ; \
+	tar -xf FBInk/Kobo/KoboRoot.tgz ; \
+	mv ./usr/local/fbink/* ./build/ ;
+	rm -rf ./usr
 
 fbpad/fbpad:
 	make -C ./fbpad/ EINK=YES
@@ -22,18 +24,20 @@ fbpad_mkfn/mkfn:
 	make -C ./fbpad_mkfn/
 
 install: $(TARGETS)
-	cp ./fbpad/fbpad ./buildroot/bin/ 
-	cp ./kbreader/kbreader ./buildroot/bin/ 
-	cp ./fbpad_mkfn/mkfn ./buildroot/bin/
+	cp ./fbpad/fbpad ./build/bin/ 
+	cp ./kbreader/kbreader ./build/bin/ 
+	cp ./fbpad_mkfn/mkfn ./build/bin/ 
 
-	mkdir -p release
-	cp -r --dereference platform/pocketbook/* ./release
-	cp -r --dereference ./buildroot ./release/applications/efbpad
+	mkdir -p ./root/mnt/onboard/.adds/efbpad/
+	cp -r --dereference ./onboard/. ./root/mnt/onboard/
+	cp -r --dereference ./build/. ./root/mnt/onboard/.adds/efbpad/
+	tar -C ./root -czf KoboRoot.tgz .
 
 clean:
 	make -C ./fbpad/ clean
 	make -C ./FBInk/ clean
 	make -C ./fbpad_mkfn/ clean
 	make -C ./kbreader/ clean
-	rm -rf ./buildroot
-	rm -rf ./release
+	rm -rf ./build
+	rm -rf ./root
+	rm -f KoboRoot.tgz

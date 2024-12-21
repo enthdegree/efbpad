@@ -1,6 +1,6 @@
 # efbpad
 
-A prototype port of fbpad to ereaders.
+A prototype terminal for a Kobo Clara BW.
 Type with a bluetooth keyboard.
 This project is in a very early stage. 
 See the long [TODO.md](TODO.md) and the project structure section below.
@@ -12,25 +12,19 @@ See the long [TODO.md](TODO.md) and the project structure section below.
 
 ## Usage
 
-Building requires a cross-compiling environment.
-NiLuJe's `koxtoolchain` envs are the path of least resistance.
-
+ - Run `make` to produce a package.
+   This requires a cross-compiling environment.
+   NiLuJe's `koxtoolchain` kobo env is the path of least resistance.
+ - On the Kobo, install kfmon, nickelmenu, and [NiLuJe's Kobo utilities.](https://www.mobileread.com/forums/showthread.php?t=254214)
+ - Either merge the contents of `./root/mnt/onboard/` with the kobo's
+   `/mnt/onboard`, or put the produced `KoboRoot.tgz` in `/mnt/onboard/.kobo`
+   After this kfmon should create a nickelmenu entry `efbpad`.
  - efbpad will only start if a bluetooth keyboard is paired and connected at
   `/dev/input/event3`.
- - When the shell closes or the keyboard is disconnected efbpad shuts down. 
+ - When efbpad is started, it attaches to an existing tmux session or starts 
+   one if none exist. When tmux closes or the keyboard is disconnected,
+   efbpad shuts down. 
 
-### Pocketbook Era
-Run `make` then `make install` and merge the contents of Release/ to storage
-
-### Kobo Clara BW
-I recently gave up on Kobos: their Mediatek SoCs have no known bluetooth control interface.
-The last commit to run on a Kobo was `01c6bc1`.
-
- - On a Kobo, first install kfmon, nickelmenu, and [NiLuJe's Kobo utilities.](https://www.mobileread.com/forums/showthread.php?t=254214)
- - After build, either merge the contents of `./root/mnt/onboard/` with the kobo's
-   `/mnt/onboard`, or put the produced `KoboRoot.tgz` in `/mnt/onboard/.kobo`
-
-After this kfmon should create a nickelmenu entry `efbpad`.
 For uninstallation, efbpad only creates these files and directories:
  - `/mnt/onboard/.adds/efbpad`
  - `/mnt/onboard/fonts/tf`
