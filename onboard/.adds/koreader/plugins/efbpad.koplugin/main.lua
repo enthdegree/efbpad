@@ -22,14 +22,24 @@ end
 function Efbpad:addToMainMenu(menu_items)
    menu_items.efbpad = {
       text = _("efbpad"),
-      sorting_hint = "more_tools",
+      sorting_hint = "tools",
       callback = function()
-	 err = io.popen("/mnt/onboard/.adds/efbpad/bin/efbpad.sh 2>&1")
-	 if(err == nil or err == '') then
-	    UIManager:show(InfoMessage:new{text = _("Efbpad ran successfully.")})
-	 else
-	    UIManager:show(InfoMessage:new{text=err})
-	 end
+	 local handle_efbpad = io.popen("/mnt/onboard/.adds/efbpad/bin/efbpad.sh 2>&1")
+	 handle_efbpad:flush()
+	 local str_efbpad = handle_efbpad:read("*all")
+	 local retvals_efbpad = handle_efbpad:close()
+	 
+	 local str_log = "/tmp/efbpad.log"
+	 local file_log = io.open(str_log, "w")
+	 file_log:write(str_efbpad)
+	 io.close(file_log)
+
+	 local n_log_bytes = string.len(str_efbpad)
+	 local n_print_bytes = math.min(n_log_bytes, 100)
+	 local str_msg = tostring(n_log_bytes) .. " bytes written to " .. str_log .. ".\n [...]" .. str_efbpad:sub(-n_print_bytes)
+	 UIManager:show(InfoMessage:new{
+			   text = str_msg,
+	 })
       end,
    }
 end
