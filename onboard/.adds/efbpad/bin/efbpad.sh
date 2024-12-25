@@ -34,4 +34,5 @@ echo "[efbpad] Cleaning up: turning off bluetooth and resetting framebuffer"
 dbus-send --system --print-reply --dest=com.kobo.mtk.bluedroid /org/bluez/hci0 org.freedesktop.DBus.Properties.Set string:"org.bluez.Adapter1" string:"Powered"  variant:boolean:false
 fbdepth -d "$OLD_FB_DEPTH" -r "$OLD_FB_ROTA"
     
+echo "[efbpad] Goodbye!"
 exit 0
