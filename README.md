@@ -20,10 +20,10 @@ See the long [TODO.md](TODO.md) and the project structure section below.
    `/mnt/onboard`, or put the produced `KoboRoot.tgz` in `/mnt/onboard/.kobo`
    After this kfmon should create a nickelmenu entry `efbpad`.
    It will also put an `efbpad` entry in koreader's tools menu.
- - At startup efbpad (efbpad.sh) will turn on bluetooth and try and open the
+ - At startup efbpad (`efbpad.sh`) will turn on bluetooth and try and open the
    event device at `/dev/input/event3` as the keyboard.
-   If it doesn't exist, then it'll wait a few seconds for it to appear.
- - Efbpad shuts down and turns off bluetooth if it never finds a keyboard, if
+   If it doesn't exist, then it'll wait 5 seconds for it to appear.
+ - efbpad shuts down and turns off bluetooth if it never finds a keyboard, if
    the keyboard disconnects or if the shell terminates.
 
 NiLuJe has helpfully compiled busybox, tmux and ssh

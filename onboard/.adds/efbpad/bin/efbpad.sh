@@ -12,10 +12,13 @@ if ! pgrep "mtkbtd" &> /dev/null; then
 fi
 dbus-send --system --print-reply --dest=com.kobo.mtk.bluedroid /org/bluez/hci0 org.freedesktop.DBus.Properties.Set string:"org.bluez.Adapter1" string:"Powered"  variant:boolean:true
 
-# Wait for keyboard to connect
-if [ ! -c $KB_INPUT ]; then
-    sleep 2
-fi
+# Wait 5 seconds for the keyboard to connect
+for idx in $(seq 1 50); do
+    if [ -c $KB_INPUT ]; then
+	break
+    fi
+    sleep 0.1
+done
 
 # If we got a keyboard, start koreader
 if [ -c $KB_INPUT ]; then
