@@ -24,11 +24,12 @@ fi
 
 # If we got a keyboard, start koreader
 if [ -c $KB_INPUT ]; then
-    kbreader $KB_INPUT | fbpad tmux new-session -A -s main
+    #kbreader $KB_INPUT | fbpad tmux new-session -A -s main
+    kbreader $KB_INPUT | fbpad /bin/sh
     dbus-send --system --print-reply --dest=com.kobo.mtk.bluedroid /org/bluez/hci0 org.freedesktop.DBus.Properties.Set string:"org.bluez.Adapter1" string:"Powered"  variant:boolean:false
     RETURN_VALUE=$?
 else
-    echo "Device $KB_INPUT not found. Doing cleanup and exit."
+    >&2 echo "Device $KB_INPUT not found. Doing cleanup and exit."
     RETURN_VALUE=1
 fi
 

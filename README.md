@@ -1,7 +1,7 @@
 # efbpad
 
-A prototype terminal for a Kobo Clara BW.
-Type with a bluetooth keyboard.
+A prototype bluetooth terminal keyboard for a Kobo Clara BW.
+
 This project is in a very early stage. 
 See the long [TODO.md](TODO.md) and the project structure section below.
 
@@ -15,31 +15,32 @@ See the long [TODO.md](TODO.md) and the project structure section below.
  - Run `make` to produce a package.
    This requires a cross-compiling environment.
    NiLuJe's `koxtoolchain` kobo env is the path of least resistance.
- - On the Kobo, install kfmon, nickelmenu, and [NiLuJe's Kobo utilities.](https://www.mobileread.com/forums/showthread.php?t=254214)
+ - On the Kobo, install kfmon and nickelmenu
  - Either merge the contents of `./root/mnt/onboard/` with the kobo's
    `/mnt/onboard`, or put the produced `KoboRoot.tgz` in `/mnt/onboard/.kobo`
    After this kfmon should create a nickelmenu entry `efbpad`.
- - efbpad will only start if a bluetooth keyboard is paired and connected at
-  `/dev/input/event3`.
- - When efbpad is started, it attaches to an existing tmux session or starts 
-   one if none exist. When tmux closes or the keyboard is disconnected,
-   efbpad shuts down. 
+   It will also put an `efbpad` entry in koreader's tools menu.
+ - At startup efbpad (efbpad.sh) will turn on bluetooth and try and open the
+   event device at `/dev/input/event3` as the keyboard.
+   If it doesn't exist, then it'll wait a few seconds for it to appear.
+ - Efbpad shuts down and turns off bluetooth if it never finds a keyboard, if
+   the keyboard disconnects or if the shell terminates.
 
-For uninstallation, efbpad only creates these files and directories:
+NiLuJe has helpfully compiled busybox, tmux and ssh
+[here](https://www.mobileread.com/forums/showthread.php?t=254214)
+...just make sure it's reconfigured to something secure.
+
+For uninstallation, efbpad creates these files and directories:
  - `/mnt/onboard/.adds/efbpad`
  - `/mnt/onboard/fonts/tf`
  - `/mnt/onboard/efbpad.png` 
  - `/mnt/onboard/.adds/kfmon/config/efbpad.ini`
+ - `/mnt/onboard/.adds/koreader/plugins/efbpad.koplugin`
 
 ## Project Structure
-Others ran so efbpad could crawl.
-It is mostly a threading together of other projects.
-Broadly, there are 5 components. 
+Broadly, we string together 4 components. 
 An effort has been made to keep them as decoupled as possible.
  - `FBInk`: A library for eink screen drawing by NiLuJe.
- - `tmux`: Terminal multiplexer. efbpad currently depends on
-   NiLuJe's utilities package for its tmux build:
-   [link](https://www.mobileread.com/forums/showthread.php?t=254214).
  - `fbpad`: A framebuffer terminal emulator by aligrudi.
    We use a very lightly patched version of fbpad: it occasionally
    makes a call to FBInk to refresh the screen.
