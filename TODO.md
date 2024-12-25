@@ -14,6 +14,3 @@
 
   - kbreader
     - There is no end to how much better the interpreter could be. Different locales? Compose key? Numpad? Unicode?
-
-  - koreader
-    - efbpad.koplugin: when fbpad exits we should redraw the gui
