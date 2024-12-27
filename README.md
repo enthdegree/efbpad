@@ -18,8 +18,7 @@ See the long [TODO.md](TODO.md) and the project structure section below.
  - On the Kobo, install kfmon and nickelmenu
  - Either merge the contents of `./root/mnt/onboard/` with the kobo's
    `/mnt/onboard`, or put the produced `KoboRoot.tgz` in `/mnt/onboard/.kobo`
-   After this kfmon should create a nickelmenu entry `efbpad`.
-   It will also put an `efbpad` entry in koreader's tools menu.
+   This will create an `efbpad` entry in nickelmenu and koreader.
  - At startup efbpad (`efbpad.sh`) will turn on bluetooth and try and open the
    event device at `/dev/input/event3` as the keyboard.
    If it doesn't exist, then it'll wait 5 seconds for it to appear.
@@ -63,5 +62,7 @@ An effort has been made to keep them as decoupled as possible.
 The included font `regular.tf` was converted using `fbpad_mkfn`:
 
 ```
-$ ./mkfn -h 48 -w 24 DejaVuSansMono.ttf:42 > regular.tf
+$ ./mkfn -h 44 -w 24 DejaVuSansMono.ttf:42 > regular.tf
+$ ./mkfn -h 44 -w 24 DejaVuSansMono-Bold.ttf:42 > bold.tf
+$ ./mkfn -h 44 -w 24 DejaVuSansMono-Oblique.ttf:42 > italic.tf
 ```
