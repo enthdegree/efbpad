@@ -1,14 +1,23 @@
 #!/bin/sh 
 
+export EFBPAD_PROFILE="/mnt/onboard/.efbpad_profile"
+export EFBPAD_CMD="/bin/sh"
 export EFBPAD_INSTALL_PREFIX="/mnt/onboard/.adds/efbpad"
+export KB_INPUT="/dev/input/event3" # This shouldn't be hardcoded
 export PATH="$EFBPAD_INSTALL_PREFIX/bin:$PATH"
 export LD_LIBRARY_PATH="$EFBPAD_INSTALL_PREFIX/lib:$LD_LIBRARY_PATH"
-export KB_INPUT="/dev/input/event3" # This shouldn't be hardcoded
+
+if [ -f "$EFBPAD_PROFILE" ]; then
+    echo "[efbpad] Profile found at $EFBPAD_PROFILE"
+    source "$EFBPAD_PROFILE"
+else
+    echo "[efbpad] No profile found at $EFBPAD_PROFILE"
+fi
 
 echo "[efbpad] Pulling up bluetooth, finding keyboard"
 dbus-send --system --print-reply --dest=com.kobo.mtk.bluedroid /org/bluez/hci0 org.freedesktop.DBus.Properties.Set string:"org.bluez.Adapter1" string:"Powered"  variant:boolean:true
 for idx in $(seq 1 50); do
-    if [ -c $KB_INPUT ]; then
+    if [ -c "$KB_INPUT" ]; then
 	break
     fi
     sleep 0.1
@@ -27,8 +36,7 @@ fbdepth -d 32 -r 2 # on clara bw: 0,2 = landscape, 3=portrait, 1=upside down
 
 echo "[efbpad] Starting kbreader, fbpad"
 # This command will continue until the pipe breaks
-#kbreader $KB_INPUT | fbpad tmux new-session -A -s main
-kbreader $KB_INPUT | fbpad /bin/sh
+kbreader $KB_INPUT | fbpad $EFBPAD_CMD
 
 echo "[efbpad] Cleaning up: turning off bluetooth and resetting framebuffer"
 dbus-send --system --print-reply --dest=com.kobo.mtk.bluedroid /org/bluez/hci0 org.freedesktop.DBus.Properties.Set string:"org.bluez.Adapter1" string:"Powered"  variant:boolean:false

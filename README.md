@@ -19,9 +19,8 @@ See the long [TODO.md](TODO.md) and the project structure section below.
  - Either merge the contents of `./root/mnt/onboard/` with the kobo's
    `/mnt/onboard`, or put the produced `KoboRoot.tgz` in `/mnt/onboard/.kobo`
    This will create an `efbpad` entry in nickelmenu and koreader.
- - At startup efbpad (`efbpad.sh`) will turn on bluetooth and try and open the
-   event device at `/dev/input/event3` as the keyboard.
-   If it doesn't exist, then it'll wait 5 seconds for it to appear.
+ - At startup efbpad (`efbpad.sh`) will `source /mnt/onboard/.efbpad_profile` if it exists, turn on bluetooth and try and open the event device at `/dev/input/event3` to use as the keyboard.
+   If no device is there, it'll wait 5 seconds after bluetooth up for the keyboard to appear.
  - efbpad shuts down and turns off bluetooth if it never finds a keyboard, if
    the keyboard disconnects or if the shell terminates.
 
