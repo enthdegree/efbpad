@@ -1,9 +1,8 @@
 # efbpad
 
-A prototype bluetooth terminal keyboard for a Kobo Clara BW.
+A bluetooth keyboard terminal for a Kobo Clara BW.
 
-This project is in a very early stage. 
-See the long [TODO.md](TODO.md) and the project structure section below.
+See the [TODO.md](TODO.md).
 
 <p align="center">
   <img alt="Wide" src="./images/efbpad_1.jpeg" width="45%">
