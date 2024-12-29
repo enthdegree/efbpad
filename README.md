@@ -60,10 +60,10 @@ An effort has been made to keep them as decoupled as possible.
 
 
 # Fonts
-`fbpad` will use fonts at `/mnt/onboard/fonts/tf/{regular,bold,italic}.sh`.
+`fbpad` will use fonts at `/mnt/onboard/fonts/tf/{regular,bold,italic}.tf`.
 If `.efbpad_profile` sets the `FONT` env var then `/mnt/onboard/fonts/tf/${FONT}_{regular,bold,italic}.tf` will be copied to that location for use.
 
-The included fonts were produced on the kobo inside a folder containing DejaVu ttfs:
+The included fonts were produced on the kobo as so, running from a folder containing DejaVu ttfs:
 ```
 mkfn -h 44 -w 24 DejaVuSansMono.ttf:42 > /mnt/onboard/fonts/tf/large_regular.tf
 mkfn -h 44 -w 24 DejaVuSansMono-Bold.ttf:42 > /mnt/onboard/fonts/tf/large_bold.tf
