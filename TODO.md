@@ -1,8 +1,8 @@
 # Improvements & Known Issues
 
-  - Wishlist
+  - General
+    - Link the binaries more directly instead of relying on LD_LIBRARY_PATH env var
     - Statusbar: battery indicator, screen orientation, exit, OSK, frontlight controls, etc
-    - Practical toolset. Secure the configs in NiLuJe usbnet package or stop using it altogether. Right now I have an onboard toolchain, want emacs running.
     - Replace logo. Right now it is an old gnome-terminal logo desaturated.
     
   - efbpad.sh

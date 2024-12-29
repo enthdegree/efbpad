@@ -6,12 +6,29 @@ export EFBPAD_INSTALL_PREFIX="/mnt/onboard/.adds/efbpad"
 export KB_INPUT="/dev/input/event3" # This shouldn't be hardcoded
 export PATH="$EFBPAD_INSTALL_PREFIX/bin:$PATH"
 export LD_LIBRARY_PATH="$EFBPAD_INSTALL_PREFIX/lib:$LD_LIBRARY_PATH"
+TF_LOCATION="/mnt/onboard/fonts/tf"
+FONT=""
 
 if [ -f "$EFBPAD_PROFILE" ]; then
     echo "[efbpad] Profile found at $EFBPAD_PROFILE"
     source "$EFBPAD_PROFILE"
 else
     echo "[efbpad] No profile found at $EFBPAD_PROFILE"
+fi
+
+if [ ! -z "$FONT" ]; then
+    echo "[efbpad] Fonts: $TF_LOCATION/${FONT}_{regular,bold,italic}.tf"
+    for fn in regular bold italic; do
+	FONT_SOURCE="$TF_LOCATION/${FONT}_$fn.tf"
+	FONT_TARGET="$TF_LOCATION/$fn.tf"
+	if [ -f "$FONT_SOURCE" ]; then
+	    rm -f "$FONT_TARGET"
+            cp "$FONT_SOURCE" "$FONT_TARGET" 
+	else
+	    echo "[efbpad] Bad font filename: $FONT_SOURCE. Exiting."
+	    exit 1
+	fi
+    done
 fi
 
 echo "[efbpad] Pulling up bluetooth, finding keyboard"
