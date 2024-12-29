@@ -24,9 +24,13 @@ See the long [TODO.md](TODO.md) and the project structure section below.
  - efbpad shuts down and turns off bluetooth if it never finds a keyboard, if
    the keyboard disconnects or if the shell terminates.
 
-NiLuJe has helpfully compiled busybox, tmux and ssh
-[here](https://www.mobileread.com/forums/showthread.php?t=254214)
-...just make sure it's reconfigured to something secure.
+NiLuJe has helpfully provided a package containing busybox, tmux and ssh
+[here](https://www.mobileread.com/forums/showthread.php?t=254214).
+As described in the link, it creates several tunnels via udev rule (then `/usr/local/stuff/bin/stuff-daemons.sh`) which should be disabled with
+```
+touch /mnt/onboard/niluje/usbnet/etc/NO_TELNET
+touch /mnt/onboard/niluje/usbnet/etc/NO_SSH
+```
 
 For uninstallation, efbpad creates these files and directories:
  - `/mnt/onboard/.adds/efbpad`
