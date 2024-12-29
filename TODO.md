@@ -1,6 +1,7 @@
 # Improvements & Known Issues
 
   - General
+    - Exit to nickel leaves the screen corrupted
     - Link the binaries more directly instead of relying on LD_LIBRARY_PATH env var
     - Statusbar: battery indicator, screen orientation, exit, OSK, frontlight controls, etc
     - Replace logo. Right now it is an old gnome-terminal logo desaturated.
