@@ -50,6 +50,20 @@ For uninstallation, efbpad creates these files and directories:
  - `/mnt/onboard/efbpad.png` 
  - `/mnt/onboard/.adds/kfmon/config/efbpad.ini`
  - `/mnt/onboard/.adds/koreader/plugins/efbpad.koplugin`
+ - 
+### Fonts
+`fbpad` will look for fonts at `/mnt/onboard/fonts/tf/{regular,bold,italic}.tf`.
+If `.efbpad_profile` sets the `EFBPAD_FONT` env var then `/mnt/onboard/fonts/tf/${EFBPAD_FONT}_{regular,bold,italic}.tf` will be copied to that location for use.
+
+The included fonts were produced on the kobo as so, running from a folder containing DejaVu ttfs:
+```
+mkfn -h 44 -w 24 DejaVuSansMono.ttf:42 > /mnt/onboard/fonts/tf/large_regular.tf
+mkfn -h 44 -w 24 DejaVuSansMono-Bold.ttf:42 > /mnt/onboard/fonts/tf/large_bold.tf
+mkfn -h 44 -w 24 DejaVuSansMono-Oblique.ttf:42 > /mnt/onboard/fonts/tf/large_italic.tf
+mkfn -h 36 -w 18 DejaVuSansMono.ttf:31 > /mnt/onboard/fonts/tf/small_regular.tf
+mkfn -h 36 -w 18 DejaVuSansMono-Bold.ttf:31 > /mnt/onboard/fonts/tf/small_bold.tf
+mkfn -h 36 -w 18 DejaVuSansMono-Oblique.ttf:31 > /mnt/onboard/fonts/tf/small_italic.tf
+```
 
 ## Project Structure
 Broadly, we string together 4 components. 
@@ -73,18 +87,3 @@ An effort has been made to keep them as decoupled as possible.
       from the rest of the software, our event device is not a touchscreen,
       and we use fbpad instead of a bespoke VT.
  - `efbpad.sh`: Script that does efbpad startup & shutdown.
-
-
-# Fonts
-`fbpad` will use fonts at `/mnt/onboard/fonts/tf/{regular,bold,italic}.tf`.
-If `.efbpad_profile` sets the `EFBPAD_FONT` env var then `/mnt/onboard/fonts/tf/${EFBPAD_FONT}_{regular,bold,italic}.tf` will be copied to that location for use.
-
-The included fonts were produced on the kobo as so, running from a folder containing DejaVu ttfs:
-```
-mkfn -h 44 -w 24 DejaVuSansMono.ttf:42 > /mnt/onboard/fonts/tf/large_regular.tf
-mkfn -h 44 -w 24 DejaVuSansMono-Bold.ttf:42 > /mnt/onboard/fonts/tf/large_bold.tf
-mkfn -h 44 -w 24 DejaVuSansMono-Oblique.ttf:42 > /mnt/onboard/fonts/tf/large_italic.tf
-mkfn -h 36 -w 18 DejaVuSansMono.ttf:31 > /mnt/onboard/fonts/tf/small_regular.tf
-mkfn -h 36 -w 18 DejaVuSansMono-Bold.ttf:31 > /mnt/onboard/fonts/tf/small_bold.tf
-mkfn -h 36 -w 18 DejaVuSansMono-Oblique.ttf:31 > /mnt/onboard/fonts/tf/small_italic.tf
-```
