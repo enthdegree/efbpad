@@ -10,17 +10,23 @@ Also see a related repo, [kobo-emacs](https://github.com/enthdegree/kobo-emacs/)
   <img alt="Detail" src="./images/efbpad_2.jpeg" width="45%">
 </p>
 
+## Build and Install
+
+ - On the Kobo, install kfmon and nickelmenu if you haven't already.
+ - Run `make` to produce an update package `KoboRoot.tgz`.
+   This requires a cross-compiling environment.
+   NiLuJe's `koxtoolchain` kobo env is the path of least resistance.**
+ - Merge the contents of the package with the kobo's `/mnt/onboard` (n.b. there are files starting with `.`).
+   Alternatively, put the tarball in `/mnt/onboard/.kobo/KoboRoot.tgz` and reboot. 
+   Either will create an `efbpad` entry in kfmon, nickelmenu and koreader's Tools menu.
+
+Possibly out-of-date pre-built binaries are available [here](https://mega.nz/file/qRxmBSwZ#c5A9sOucsCMRtwlEwWZFs_fh0QIi1JNk9F2rQ_fx3w0).
+Although this doesn't touch any non-user directories, you could still brick your device if you don't know what you're doing so be careful. 
+   
 ## Usage
 
- - Run `make` to produce a package.
-   This requires a cross-compiling environment.
-   NiLuJe's `koxtoolchain` kobo env is the path of least resistance.
- - On the Kobo, install kfmon and nickelmenu
- - Either merge the contents of `./root/mnt/onboard/` with the kobo's
-   `/mnt/onboard`, or put the produced `KoboRoot.tgz` in `/mnt/onboard/.kobo`
-   This will create an `efbpad` entry in kfmon, nickelmenu and koreader's Tools menu.
- - Pair your bluetooth keyboard through the Kobo UI. Mine took a few tries.
- - While your bluetooth keyboard is set to try pairing with the Kobo, run efbpad from any of the above launchers.
+ - Before starting, pair your bluetooth keyboard through the Kobo UI.
+ - While your bluetooth keyboard is set to attempt to pair with the Kobo, run efbpad from any of the above launchers.
    At startup efbpad (`efbpad.sh`) will:
    - `source /mnt/onboard/.efbpad_profile` if it exists.
    - Turn on the Kobo's bluetooth.
