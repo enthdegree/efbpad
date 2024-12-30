@@ -7,7 +7,7 @@ export KB_INPUT="/dev/input/event3" # This shouldn't be hardcoded
 export PATH="$EFBPAD_INSTALL_PREFIX/bin:$PATH"
 export LD_LIBRARY_PATH="$EFBPAD_INSTALL_PREFIX/lib:$LD_LIBRARY_PATH"
 TF_LOCATION="/mnt/onboard/fonts/tf"
-FONT=""
+EFBPAD_FONT=""
 
 if [ -f "$EFBPAD_PROFILE" ]; then
     echo "[efbpad] Profile found at $EFBPAD_PROFILE"
@@ -16,10 +16,10 @@ else
     echo "[efbpad] No profile found at $EFBPAD_PROFILE"
 fi
 
-if [ ! -z "$FONT" ]; then
-    echo "[efbpad] Fonts: $TF_LOCATION/${FONT}_{regular,bold,italic}.tf"
+if [ ! -z "$EFBPAD_FONT" ]; then
+    echo "[efbpad] Fonts: $TF_LOCATION/${EFBPAD_FONT}_{regular,bold,italic}.tf"
     for fn in regular bold italic; do
-	FONT_SOURCE="$TF_LOCATION/${FONT}_$fn.tf"
+	FONT_SOURCE="$TF_LOCATION/${EFBPAD_FONT}_$fn.tf"
 	FONT_TARGET="$TF_LOCATION/$fn.tf"
 	if [ -f "$FONT_SOURCE" ]; then
 	    rm -f "$FONT_TARGET"
