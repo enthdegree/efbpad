@@ -3,6 +3,7 @@
 A bluetooth keyboard terminal for a Kobo Clara BW.
 
 See the [TODO.md](TODO.md).
+Also see a related repo, [kobo-emacs](https://github.com/enthdegree/kobo-emacs/)
 
 <p align="center">
   <img alt="Wide" src="./images/efbpad_1.jpeg" width="45%">
@@ -17,11 +18,16 @@ See the [TODO.md](TODO.md).
  - On the Kobo, install kfmon and nickelmenu
  - Either merge the contents of `./root/mnt/onboard/` with the kobo's
    `/mnt/onboard`, or put the produced `KoboRoot.tgz` in `/mnt/onboard/.kobo`
-   This will create an `efbpad` entry in nickelmenu and koreader.
- - At startup efbpad (`efbpad.sh`) will `source /mnt/onboard/.efbpad_profile` if it exists, turn on bluetooth and try and open the event device at `/dev/input/event3` to use as the keyboard.
-   If no device is there, it'll wait 5 seconds after bluetooth up for the keyboard to appear.
- - efbpad shuts down and turns off bluetooth if it never finds a keyboard, if
-   the keyboard disconnects or if the shell terminates.
+   This will create an `efbpad` entry in kfmon, nickelmenu and koreader's Tools menu.
+ - Pair your bluetooth keyboard through the Kobo UI. Mine took a few tries.
+ - While your bluetooth keyboard is set to try pairing with the Kobo, run efbpad from any of the above launchers.
+   At startup efbpad (`efbpad.sh`) will:
+   - `source /mnt/onboard/.efbpad_profile` if it exists.
+   - Turn on the Kobo's bluetooth.
+   - Try and open the event device at `/dev/input/event3` to use as the keyboard.
+     If no device is there, it'll wait 5 seconds after bluetooth up for the keyboard to appear. 
+ - efbpad shuts down and cleans up if it never finds a keyboard, if the keyboard disconnects or if the shell terminates.
+   (The last case requires that you type an extra char on the keyboard to exit).
 
 NiLuJe has helpfully provided a package containing busybox, tmux and ssh
 [here](https://www.mobileread.com/forums/showthread.php?t=254214).
