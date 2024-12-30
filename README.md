@@ -15,7 +15,7 @@ Also see a related repo, [kobo-emacs](https://github.com/enthdegree/kobo-emacs/)
  - On the Kobo, install kfmon and nickelmenu if you haven't already.
  - Run `make` to produce an update package `KoboRoot.tgz`.
    This requires a cross-compiling environment.
-   NiLuJe's `koxtoolchain` kobo env is the path of least resistance.**
+   NiLuJe's `koxtoolchain` kobo env is the path of least resistance.
  - Merge the contents of the package with the kobo's `/mnt/onboard` (n.b. there are files starting with `.`).
    Alternatively, put the tarball in `/mnt/onboard/.kobo/KoboRoot.tgz` and reboot. 
    Either will create an `efbpad` entry in kfmon, nickelmenu and koreader's Tools menu.
