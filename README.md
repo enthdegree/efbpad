@@ -22,7 +22,8 @@ This is completely untested works-for-me-ware. Although this doesn't touch any n
    Alternatively, put the tarball in `/mnt/onboard/.kobo/KoboRoot.tgz` and reboot. 
    Either will create an `efbpad` entry in kfmon, nickelmenu and koreader's Tools menu.
 
-Possibly out-of-date pre-built binaries are available [here](https://mega.nz/file/qRxmBSwZ#c5A9sOucsCMRtwlEwWZFs_fh0QIi1JNk9F2rQ_fx3w0).
+### Prebuilt
+Possibly out-of-date pre-built binaries are available [here](https://mega.nz/folder/mU4kQa7L#9MGGHw2HltTiviuZUtqynw).
    
 ## Usage
 
