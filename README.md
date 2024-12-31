@@ -1,4 +1,4 @@
-# efbpad
+1# efbpad
 
 A bluetooth keyboard terminal for a Kobo Clara BW.
 
@@ -23,7 +23,7 @@ This is completely untested works-for-me-ware. Although this doesn't touch any n
    Either will create an `efbpad` entry in kfmon, nickelmenu and koreader's Tools menu.
 
 ### Prebuilt
-Instead of building you can try a possibly-out-of-date pre-built binary [here](https://mega.nz/folder/mU4kQa7L#9MGGHw2HltTiviuZUtqynw).
+Instead of compiling everything you can try things out with a (maybe out-of-date) pre-built package [here](https://mega.nz/folder/mU4kQa7L#9MGGHw2HltTiviuZUtqynw).
   
 ## Usage
 
