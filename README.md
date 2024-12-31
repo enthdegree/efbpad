@@ -51,7 +51,7 @@ For uninstallation, efbpad creates these files and directories:
  - `/mnt/onboard/efbpad.png` 
  - `/mnt/onboard/.adds/kfmon/config/efbpad.ini`
  - `/mnt/onboard/.adds/koreader/plugins/efbpad.koplugin`
- - 
+
 ### Fonts
 `fbpad` will look for fonts at `/mnt/onboard/fonts/tf/{regular,bold,italic}.tf`.
 If `.efbpad_profile` sets the `EFBPAD_FONT` env var then `/mnt/onboard/fonts/tf/${EFBPAD_FONT}_{regular,bold,italic}.tf` will be copied to that location for use.
