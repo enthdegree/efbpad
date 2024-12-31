@@ -1,4 +1,4 @@
-1# efbpad
+# efbpad
 
 A bluetooth keyboard terminal for a Kobo Clara BW.
 
