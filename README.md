@@ -23,8 +23,8 @@ This is completely untested works-for-me-ware. Although this doesn't touch any n
    Either will create an `efbpad` entry in kfmon, nickelmenu and koreader's Tools menu.
 
 ### Prebuilt
-Possibly out-of-date pre-built binaries are available [here](https://mega.nz/folder/mU4kQa7L#9MGGHw2HltTiviuZUtqynw).
-   
+Instead of building you can try a possibly-out-of-date pre-built binary [here](https://mega.nz/folder/mU4kQa7L#9MGGHw2HltTiviuZUtqynw).
+  
 ## Usage
 
  - Before starting, pair your bluetooth keyboard through the Kobo UI.
