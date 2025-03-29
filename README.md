@@ -18,8 +18,8 @@ This is completely untested works-for-me-ware. Although this doesn't touch any n
 
 Pre-built packages are available [here](https://mega.nz/folder/mU4kQa7L#9MGGHw2HltTiviuZUtqynw).
 
-- On the Kobo, install kfmon and nickelmenu if you haven't already.
-- Merge the contents of the package with the kobo's `/mnt/onboard` (n.b. there are files starting with `.`). Alternatively, put the tarball in `/mnt/onboard/.kobo/KoboRoot.tgz` and reboot. Either of these will create an `efbpad` entry in kfmon, nickelmenu and koreader's Tools menu.
+- On the Kobo, install [kfmon](https://github.com/NiLuJe/kfmon) and [nickelmenu](https://pgaskin.net/NickelMenu/) if you don't already have them.
+- Merge the contents of the package with the Kobo's `/mnt/onboard` (n.b. there are files starting with `.`). Alternatively, put the tarball in `/mnt/onboard/.kobo/KoboRoot.tgz` and reboot. Either of these will create an efbpad entry in kfmon, nickelmenu and koreader's Tools menu.
   
 ## Usage
 
@@ -75,7 +75,7 @@ An effort has been made to keep them as decoupled as possible.
     - Here we follow the example of a similar project, [`fbpad-eink`](https://github.com/kisonecat/fbpad-eink), which
       took a more integrated approach to refreshes and had a different
       keyboard system.
- - `kbreader`: Under proper conditions keyboards appear in linux as
+ - `kbreader` (developed here): Under proper conditions keyboards appear in linux as
    event devices. `kbreader` acts as the interpreter to translate keystrokes
    coming out of an event device into strings printed to stdout.
    This is a standalone utility.
@@ -83,10 +83,10 @@ An effort has been made to keep them as decoupled as possible.
    to listen to the keyboard by piping kbreader into it as so:
    `kbreader /dev/input/event3 | fbpad the_shell`.
     - `kbreader` is spiritually identical to the onscreen keyboard in
-      a similar project `inkvt`, except our keyboard reader is decoupled
+      a similar project [`inkvt`](https://github.com/llandsmeer/inkvt), except our keyboard reader is decoupled
       from the rest of the software, our event device is not a touchscreen,
       and we use fbpad instead of a bespoke VT.
- - `efbpad.sh`: Script that does efbpad startup & shutdown. At startup efbpad (`efbpad.sh`) will:
+ - `efbpad.sh` (developed here): Script that does efbpad startup & shutdown. At startup efbpad (`efbpad.sh`) will:
    - `source /mnt/onboard/.efbpad_profile` if it exists.
    - Turn on the Kobo's bluetooth.
    - Try and open the event device at `/dev/input/event3` to use as the keyboard. If no device is there, it'll wait 5 seconds after bluetooth up for the keyboard to appear. 
