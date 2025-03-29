@@ -62,8 +62,7 @@ For uninstallation, efbpad creates these files and directories:
 
 ### Build
  - Run `make` to produce an update package `KoboRoot.tgz`.
-   This requires a cross-compiling environment.
-   NiLuJe's `koxtoolchain` kobo env is the path of least resistance.
+   This requires a cross-compiling environment. The path of least resistance is building and enabling the kobo env from [`koxtoolchain`](https://github.com/koreader/koxtoolchain).
 
 ### Project Structure
 Broadly, we string together 4 components. 
