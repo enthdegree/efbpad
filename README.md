@@ -14,45 +14,18 @@ Relevant links:
 
 This is completely untested works-for-me-ware. Although this doesn't touch any non-user directories, you could still brick your device if you don't know what you're doing so be careful. 
 
-## Build and Install
+## Install
 
- - On the Kobo, install kfmon and nickelmenu if you haven't already.
- - Run `make` to produce an update package `KoboRoot.tgz`.
-   This requires a cross-compiling environment.
-   NiLuJe's `koxtoolchain` kobo env is the path of least resistance.
- - Merge the contents of the package with the kobo's `/mnt/onboard` (n.b. there are files starting with `.`).
-   Alternatively, put the tarball in `/mnt/onboard/.kobo/KoboRoot.tgz` and reboot. 
-   Either will create an `efbpad` entry in kfmon, nickelmenu and koreader's Tools menu.
+Pre-built packages are available [here](https://mega.nz/folder/mU4kQa7L#9MGGHw2HltTiviuZUtqynw).
 
-### Prebuilt
-Instead of compiling everything you can try things out with a (maybe out-of-date) pre-built package [here](https://mega.nz/folder/mU4kQa7L#9MGGHw2HltTiviuZUtqynw).
+- On the Kobo, install kfmon and nickelmenu if you haven't already.
+- Merge the contents of the package with the kobo's `/mnt/onboard` (n.b. there are files starting with `.`). Alternatively, put the tarball in `/mnt/onboard/.kobo/KoboRoot.tgz` and reboot. Either of these will create an `efbpad` entry in kfmon, nickelmenu and koreader's Tools menu.
   
 ## Usage
 
- - Before starting, pair your bluetooth keyboard through the Kobo UI.
- - While your bluetooth keyboard is set to attempt to pair with the Kobo, run efbpad from any of the above launchers.
-   At startup efbpad (`efbpad.sh`) will:
-   - `source /mnt/onboard/.efbpad_profile` if it exists.
-   - Turn on the Kobo's bluetooth.
-   - Try and open the event device at `/dev/input/event3` to use as the keyboard.
-     If no device is there, it'll wait 5 seconds after bluetooth up for the keyboard to appear. 
- - efbpad shuts down and cleans up if it never finds a keyboard, if the keyboard disconnects or if the shell terminates.
-   (The last case requires that you type an extra char on the keyboard to exit).
-
-NiLuJe has helpfully provided a package containing busybox, tmux and ssh
-[here](https://www.mobileread.com/forums/showthread.php?t=254214).
-As described in the link, it creates several tunnels via udev rule (then `/usr/local/stuff/bin/stuff-daemons.sh`) which should be disabled with
-```
-touch /mnt/onboard/niluje/usbnet/etc/NO_TELNET
-touch /mnt/onboard/niluje/usbnet/etc/NO_SSH
-```
-
-For uninstallation, efbpad creates these files and directories:
- - `/mnt/onboard/.adds/efbpad`
- - `/mnt/onboard/fonts/tf`
- - `/mnt/onboard/efbpad.png` 
- - `/mnt/onboard/.adds/kfmon/config/efbpad.ini`
- - `/mnt/onboard/.adds/koreader/plugins/efbpad.koplugin`
+ - Before starting, pair your bluetooth keyboard to the Kobo through the Kobo UI.
+ - While your keyboard is set to try & pair with the Kobo, run efbpad. Once the keyboard is found it will present the terminal.
+ - efbpad shuts down and cleans up when the keyboard disconnects, when the shell terminates, or if it doesn't find a keyboard to use within 5 seconds of launch.
 
 ### Fonts
 `fbpad` will look for fonts at `/mnt/onboard/fonts/tf/{regular,bold,italic}.tf`.
@@ -68,14 +41,38 @@ mkfn -h 36 -w 18 DejaVuSansMono-Bold.ttf:31 > /mnt/onboard/fonts/tf/small_bold.t
 mkfn -h 36 -w 18 DejaVuSansMono-Oblique.ttf:31 > /mnt/onboard/fonts/tf/small_italic.tf
 ```
 
-## Project Structure
+### usbnet
+NiLuJe has helpfully provided a package containing busybox, tmux and ssh
+[here](https://www.mobileread.com/forums/showthread.php?t=254214).
+As described in the link, it creates several tunnels via udev rule (then `/usr/local/stuff/bin/stuff-daemons.sh`) which should be disabled with
+```
+touch /mnt/onboard/niluje/usbnet/etc/NO_TELNET
+touch /mnt/onboard/niluje/usbnet/etc/NO_SSH
+```
+
+### Uninstall
+For uninstallation, efbpad creates these files and directories:
+ - `/mnt/onboard/.adds/efbpad`
+ - `/mnt/onboard/fonts/tf`
+ - `/mnt/onboard/efbpad.png` 
+ - `/mnt/onboard/.adds/kfmon/config/efbpad.ini`
+ - `/mnt/onboard/.adds/koreader/plugins/efbpad.koplugin`
+
+## Development 
+
+### Build
+ - Run `make` to produce an update package `KoboRoot.tgz`.
+   This requires a cross-compiling environment.
+   NiLuJe's `koxtoolchain` kobo env is the path of least resistance.
+
+### Project Structure
 Broadly, we string together 4 components. 
 An effort has been made to keep them as decoupled as possible.
- - `FBInk`: A library for eink screen drawing by NiLuJe.
- - `fbpad`: A framebuffer terminal emulator by aligrudi.
+ - [`FBInk`](https://github.com/NiLuJe/FBInk): A library for eink screen drawing by NiLuJe.
+ - [`fbpad`](https://github.com/aligrudi/fbpad): A framebuffer terminal emulator by aligrudi.
    We use a very lightly patched version of fbpad: it occasionally
    makes a call to FBInk to refresh the screen.
-    - Here we follow the example of a similar project, `fbpad-eink`, which
+    - Here we follow the example of a similar project, [`fbpad-eink`](https://github.com/kisonecat/fbpad-eink), which
       took a more integrated approach to refreshes and had a different
       keyboard system.
  - `kbreader`: Under proper conditions keyboards appear in linux as
@@ -89,4 +86,7 @@ An effort has been made to keep them as decoupled as possible.
       a similar project `inkvt`, except our keyboard reader is decoupled
       from the rest of the software, our event device is not a touchscreen,
       and we use fbpad instead of a bespoke VT.
- - `efbpad.sh`: Script that does efbpad startup & shutdown.
+ - `efbpad.sh`: Script that does efbpad startup & shutdown. At startup efbpad (`efbpad.sh`) will:
+   - `source /mnt/onboard/.efbpad_profile` if it exists.
+   - Turn on the Kobo's bluetooth.
+   - Try and open the event device at `/dev/input/event3` to use as the keyboard. If no device is there, it'll wait 5 seconds after bluetooth up for the keyboard to appear. 
