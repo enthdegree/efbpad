@@ -29,7 +29,7 @@ Pre-built packages are available [here](https://mega.nz/folder/mU4kQa7L#9MGGHw2H
 
 ### Fonts
 `fbpad` will look for fonts at `/mnt/onboard/fonts/tf/{regular,bold,italic}.tf`.
-If `.efbpad_profile` sets the `EFBPAD_FONT` env var then `/mnt/onboard/fonts/tf/${EFBPAD_FONT}_{regular,bold,italic}.tf` will be copied to that location for use.
+If the script `/mnt/onboard/.efbpad_profile` sets the `EFBPAD_FONT` env var then `/mnt/onboard/fonts/tf/${EFBPAD_FONT}_{regular,bold,italic}.tf` will be copied to that location for use.
 
 The included fonts were produced on the kobo as so, running from a folder containing DejaVu ttfs:
 ```
