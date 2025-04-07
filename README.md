@@ -27,18 +27,21 @@ Pre-built packages are available [here](https://mega.nz/folder/mU4kQa7L#9MGGHw2H
  - While your keyboard is set to try & pair with the Kobo, run efbpad. Once the keyboard is found it will present the terminal.
  - efbpad shuts down and cleans up when the keyboard disconnects, when the shell terminates, or if it doesn't find a keyboard to use within 5 seconds of launch.
 
-### Fonts
-`fbpad` will look for fonts at `/mnt/onboard/fonts/tf/{regular,bold,italic}.tf`.
-If the script `/mnt/onboard/.efbpad_profile` sets the `EFBPAD_FONT` env var then `/mnt/onboard/fonts/tf/${EFBPAD_FONT}_{regular,bold,italic}.tf` will be copied to that location for use.
+### Controlling fbpad
+`fbpad` control sequences have been moved to a fifo in `/mnt/onboard/.adds/efbpad/run/fbpad_[pid]`.
+For example, to reload the clrfile (fonts and colors config), try running `echo -n -e '\x05' > /mnt/onboard/.adds/efbpad/run/fbpad_[pid]`.
+
+`fbpad` will look for fonts and colors according to the config `/mnt/onboard/.adds/efbpad/fbpad_clrfile`.
+By default it will fall back to `/mnt/onboard/fonts/tf/{regular,bold,italic}.tf.`
 
 The included fonts were produced on the kobo as so, running from a folder containing DejaVu ttfs:
 ```
-mkfn -h 44 -w 24 DejaVuSansMono.ttf:42 > /mnt/onboard/fonts/tf/large_regular.tf
-mkfn -h 44 -w 24 DejaVuSansMono-Bold.ttf:42 > /mnt/onboard/fonts/tf/large_bold.tf
-mkfn -h 44 -w 24 DejaVuSansMono-Oblique.ttf:42 > /mnt/onboard/fonts/tf/large_italic.tf
-mkfn -h 36 -w 18 DejaVuSansMono.ttf:31 > /mnt/onboard/fonts/tf/small_regular.tf
-mkfn -h 36 -w 18 DejaVuSansMono-Bold.ttf:31 > /mnt/onboard/fonts/tf/small_bold.tf
-mkfn -h 36 -w 18 DejaVuSansMono-Oblique.ttf:31 > /mnt/onboard/fonts/tf/small_italic.tf
+mkfn -h 44 -w 24 DejaVuSansMono.ttf:42 > /mnt/onboard/fonts/tf/regular_large.tf
+mkfn -h 44 -w 24 DejaVuSansMono-Oblique.ttf:42 > /mnt/onboard/fonts/tf/italic_large.tf
+mkfn -h 44 -w 24 DejaVuSansMono-Bold.ttf:42 > /mnt/onboard/fonts/tf/bold_large.tf
+mkfn -h 36 -w 18 DejaVuSansMono.ttf:31 > /mnt/onboard/fonts/tf/regular_small.tf
+mkfn -h 36 -w 18 DejaVuSansMono-Oblique.ttf:31 > /mnt/onboard/fonts/tf/italic_small.tf
+mkfn -h 36 -w 18 DejaVuSansMono-Bold.ttf:31 > /mnt/onboard/fonts/tf/bold_small.tf
 ```
 
 ### usbnet
@@ -88,4 +91,4 @@ An effort has been made to keep them as decoupled as possible.
  - `efbpad.sh` (developed here): Script that does efbpad startup & shutdown. At startup efbpad (`efbpad.sh`) will:
    - `source /mnt/onboard/.efbpad_profile` if it exists.
    - Turn on the Kobo's bluetooth.
-   - Try and open the event device at `/dev/input/event3` to use as the keyboard. If no device is there, it'll wait 5 seconds after bluetooth up for the keyboard to appear. 
+   - Try and open the event device at `$KB_EVDEV` (default `"/dev/input/event3"`). If no device is there, it'll wait 5 seconds after bluetooth up for the keyboard to appear. 

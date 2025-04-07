@@ -1,6 +1,14 @@
-TARGETS = armcheck libfbink fbpad/fbpad kbreader/kbreader fbpad_mkfn/mkfn install
+TARGETS = armcheck libfbink fbpad/fbpad kbreader/kbreader fbpad_mkfn/mkfn
 
 all: $(TARGETS)
+	cp ./fbpad/fbpad ./build/bin/ 
+	cp ./kbreader/kbreader ./build/bin/ 
+	cp ./fbpad_mkfn/mkfn ./build/bin/ 
+
+	mkdir -p ./root/mnt/onboard/.adds/efbpad/
+	cp -r --dereference ./onboard/. ./root/mnt/onboard/
+	cp -r --dereference ./build/. ./root/mnt/onboard/.adds/efbpad/
+	tar -C ./root -czf KoboRoot.tgz .
 
 armcheck:
 ifeq (,$(findstring arm-,$(CROSS_TC)))
@@ -22,16 +30,6 @@ kbreader/kbreader:
 
 fbpad_mkfn/mkfn:
 	make -C ./fbpad_mkfn/
-
-install: $(TARGETS)
-	cp ./fbpad/fbpad ./build/bin/ 
-	cp ./kbreader/kbreader ./build/bin/ 
-	cp ./fbpad_mkfn/mkfn ./build/bin/ 
-
-	mkdir -p ./root/mnt/onboard/.adds/efbpad/
-	cp -r --dereference ./onboard/. ./root/mnt/onboard/
-	cp -r --dereference ./build/. ./root/mnt/onboard/.adds/efbpad/
-	tar -C ./root -czf KoboRoot.tgz .
 
 clean:
 	make -C ./fbpad/ clean

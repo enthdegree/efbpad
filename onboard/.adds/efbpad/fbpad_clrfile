@@ -1,0 +1,15 @@
+# Foreground and background colors
+color   000000 ffffff
+
+# Basic 16-color palette
+color16 101010 7c7c7c 8e8e8e a0a0a0 686868 747474 868686 b9b9b9
+        525252 7c7c7c 8e8e8e a0a0a0 686868 747474 868686 f7f7f7
+
+# Cursor color
+cursor  ffffff 000000
+
+# Border color and width
+border  ffffff 3
+
+# Fonts: regular, italic, bold
+font    /mnt/onboard/fonts/tf/regular.tf /mnt/onboard/fonts/tf/italic.tf /mnt/onboard/fonts/tf/bold.tf
