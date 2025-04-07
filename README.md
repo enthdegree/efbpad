@@ -12,7 +12,7 @@ Relevant links:
   <img alt="Detail" src="./images/efbpad_2.jpeg" width="45%">
 </p>
 
-This is completely untested works-for-me-ware. Although this doesn't touch any non-user directories, you could still brick your device if you don't know what you're doing so be careful. 
+This is completely untested works-for-me-ware. Although this doesn't touch any non-user directories, you could still brick your device if you don't know what you're doing. 
 
 ## Install
 
