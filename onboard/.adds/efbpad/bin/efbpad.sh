@@ -2,10 +2,10 @@
 export EFBPAD_PROFILE="/mnt/onboard/.efbpad_profile"
 export EFBPAD_TMPDIR='/tmp/efbpad'
 export EFBPAD_CMD="/bin/sh"
-export EFBPAD_INSTALL_PREFIX="/mnt/onboard/.adds/efbpad"
+export EFBPAD_PREFIX="/mnt/onboard/.adds/efbpad"
 export FBPAD_FIFO_DIR="/tmp/efbpad"
 export KB_EVDEV="/dev/input/event3" # This shouldn't be hardcoded
-export PATH="$EFBPAD_INSTALL_PREFIX/bin:$PATH"
+export PATH="$EFBPAD_PREFIX/bin:$PATH"
 
 # Set up tmpdir and logging
 mkdir -p "$EFBPAD_TMPDIR"
@@ -38,9 +38,9 @@ fi
 
 # Set up LD_LIBRARY_PATH
 if [ -z "$LD_LIBRARY_PATH" ]; then
-    export LD_LIBRARY_PATH="$EFBPAD_INSTALL_PREFIX/lib"
+    export LD_LIBRARY_PATH="$EFBPAD_PREFIX/lib"
 else
-    export LD_LIBRARY_PATH="$EFBPAD_INSTALL_PREFIX/lib:$LD_LIBRARY_PATH"
+    export LD_LIBRARY_PATH="$EFBPAD_PREFIX/lib:$LD_LIBRARY_PATH"
 fi
 
 
