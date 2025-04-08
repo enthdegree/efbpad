@@ -52,7 +52,7 @@ touch /mnt/onboard/niluje/usbnet/etc/NO_SSH
 ```
 
 ### Uninstall
-For uninstallation, efbpad creates these files and directories:
+To uninstall delete all efbpad's files and directories:
  - `/mnt/onboard/.adds/efbpad`
  - `/mnt/onboard/fonts/tf`
  - `/mnt/onboard/efbpad.png` 
