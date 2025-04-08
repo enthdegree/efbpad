@@ -1,8 +1,6 @@
 # efbpad
 
 A bluetooth keyboard terminal for a Kobo Clara BW.
-
-Relevant links:
 - [A video of it in action](https://youtube.com/shorts/0Jld5KgFcXU)
 - A related repo, [kobo-emacs](https://github.com/enthdegree/kobo-emacs/)
 - [TODO.md](TODO.md)
