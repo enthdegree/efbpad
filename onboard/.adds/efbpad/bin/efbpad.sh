@@ -2,10 +2,9 @@
 export EFBPAD_PROFILE="/mnt/onboard/.efbpad_profile"
 export EFBPAD_TMPDIR='/tmp/efbpad'
 export EFBPAD_CMD="/bin/sh"
-export EFBPAD_PREFIX="/mnt/onboard/.adds/efbpad"
-export FBPAD_FIFO_DIR="/tmp/efbpad"
-export KB_EVDEV="/dev/input/event3" # This shouldn't be hardcoded
-export PATH="$EFBPAD_PREFIX/bin:$PATH"
+export EFBPAD_DIR="/mnt/onboard/.adds/efbpad"
+export EFBPAD_KB="/dev/input/event3" # This shouldn't be hardcoded
+export PATH="$EFBPAD_DIR/bin:$PATH"
 
 # Set up tmpdir and logging
 mkdir -p "$EFBPAD_TMPDIR"
@@ -38,9 +37,9 @@ fi
 
 # Set up LD_LIBRARY_PATH
 if [ -z "$LD_LIBRARY_PATH" ]; then
-    export LD_LIBRARY_PATH="$EFBPAD_PREFIX/lib"
+    export LD_LIBRARY_PATH="$EFBPAD_DIR/lib"
 else
-    export LD_LIBRARY_PATH="$EFBPAD_PREFIX/lib:$LD_LIBRARY_PATH"
+    export LD_LIBRARY_PATH="$EFBPAD_DIR/lib:$LD_LIBRARY_PATH"
 fi
 
 
@@ -48,15 +47,15 @@ fi
 echo "[efbpad] Pulling up bluetooth, finding keyboard"
 dbus-send --system --print-reply --dest=com.kobo.mtk.bluedroid /org/bluez/hci0 org.freedesktop.DBus.Properties.Set string:"org.bluez.Adapter1" string:"Powered"  variant:boolean:true
 for idx in $(seq 1 50); do
-    if [ -c "$KB_EVDEV" ]; then
+    if [ -c "$EFBPAD_KB" ]; then
 	break
     fi
     sleep 0.1
 done
 
 # If we got a keyboard, start koreader
-if [ ! -c $KB_EVDEV ]; then
-    >&2 echo "[efbpad] Device $KB_EVDEV not found. Doing cleanup and exit."
+if [ ! -c $EFBPAD_KB ]; then
+    >&2 echo "[efbpad] Device $EFBPAD_KB not found. Doing cleanup and exit."
     RETURN_VALUE=1
 fi
 
@@ -68,7 +67,7 @@ fbdepth -d 32 -r 2 # on clara bw: 0,2 = landscape, 3=portrait, 1=upside down
 
 # Start up fbpad
 echo "[efbpad] Starting kbreader, fbpad"
-kbreader $KB_EVDEV | fbpad $EFBPAD_CMD 
+kbreader $EFBPAD_KB | fbpad $EFBPAD_CMD 
 
 # Cleanup
 echo "[efbpad] Cleaning up"
