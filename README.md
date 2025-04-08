@@ -17,20 +17,22 @@ Relevant links:
 Pre-built packages are available [here](https://mega.nz/folder/mU4kQa7L#9MGGHw2HltTiviuZUtqynw).
 
 - On the Kobo, install [kfmon](https://github.com/NiLuJe/kfmon) and [nickelmenu](https://pgaskin.net/NickelMenu/) if you don't already have them.
-- Merge the contents of the package with the Kobo's `/mnt/onboard` (n.b. there are files starting with `.`). Alternatively, put the tarball in `/mnt/onboard/.kobo/KoboRoot.tgz` and reboot. Either of these will create an efbpad entry in kfmon, nickelmenu and koreader's Tools menu.
+- Put the .tgz package at `/mnt/onboard/.kobo/KoboRoot.tgz` and reboot. Alternatively, merge the contents of the package with the Kobo's `/mnt/onboard` (n.b. there are files starting with `.`). Either of these will create an efbpad entry in kfmon, nickelmenu and koreader's Tools menu.
   
 ## Usage
 
  - Before starting, pair your bluetooth keyboard to the Kobo through the Kobo UI.
- - While your keyboard is set to try & pair with the Kobo, run efbpad. Once the keyboard is found it will present the terminal.
- - efbpad shuts down and cleans up when the keyboard disconnects, when the shell terminates, or if it doesn't find a keyboard to use within 5 seconds of launch.
+ - While the keyboard is set to pair with the Kobo, run efbpad. Once the keyboard is found it will present the terminal.
+ - efbpad shuts down when the keyboard disconnects, when the shell terminates, or when it doesn't find a keyboard within ~5 seconds of start.
 
 ### Controlling fbpad
-`fbpad` control sequences have been moved to a fifo in `/mnt/onboard/.adds/efbpad/run/fbpad_[pid]`.
-For example, to reload the clrfile (fonts and colors config), try running `echo -n -e '\x05' > /mnt/onboard/.adds/efbpad/run/fbpad_[pid]`.
+Upstream `fbpad` reads some escaped control sequences `M-[...]`. 
+For compatibility this project moves those controls to a fifo `/tmp/efbpad/fbpad_fifo`. 
+In the fifo control sequences the escape char `^[` is omitted. 
 
-`fbpad` will look for fonts and colors according to the config `/mnt/onboard/.adds/efbpad/fbpad_clrfile`.
-By default it will fall back to `/mnt/onboard/fonts/tf/{regular,bold,italic}.tf.`
+`fbpad` looks for fonts and colors according to the config `/mnt/onboard/.adds/efbpad/fbpad_clrfile`.
+To reload the config run `echo -n -e '\x05' > /tmp/efbpad/fbpad_fifo`.
+As fallback it will use fonts `/mnt/onboard/fonts/tf/{regular,bold,italic}.tf`.
 
 The included fonts were produced on the kobo as so, running from a folder containing DejaVu ttfs:
 ```
@@ -66,13 +68,11 @@ For uninstallation, efbpad creates these files and directories:
    This requires a cross-compiling environment. The path of least resistance is building and enabling the kobo env from [`koxtoolchain`](https://github.com/koreader/koxtoolchain).
 
 ### Project Structure
-Broadly, we string together 4 components. 
-An effort has been made to keep them as decoupled as possible.
+Broadly, we string together 4 decoupled components. 
  - [`FBInk`](https://github.com/NiLuJe/FBInk): A library for eink screen drawing by NiLuJe.
  - [`fbpad`](https://github.com/aligrudi/fbpad): A framebuffer terminal emulator by aligrudi.
-   We use a very lightly patched version of fbpad: it occasionally
-   makes a call to FBInk to refresh the screen.
-    - Here we follow the example of a similar project, [`fbpad-eink`](https://github.com/kisonecat/fbpad-eink), which
+   We use a lightly patched fork of fbpad [here](https://github.com/enthdegree/fbpad). 
+    - A similar project, [`fbpad-eink`](https://github.com/kisonecat/fbpad-eink), which
       took a more integrated approach to refreshes and had a different
       keyboard system.
  - `kbreader` (developed here): Under proper conditions keyboards appear in linux as
@@ -86,7 +86,9 @@ An effort has been made to keep them as decoupled as possible.
       a similar project [`inkvt`](https://github.com/llandsmeer/inkvt), except our keyboard reader is decoupled
       from the rest of the software, our event device is not a touchscreen,
       and we use fbpad instead of a bespoke VT.
- - `efbpad.sh` (developed here): Script that does efbpad startup & shutdown. At startup efbpad (`efbpad.sh`) will:
+ - `efbpad.sh` (developed here): Startup & shutdown. It manages various things:
    - `source /mnt/onboard/.efbpad_profile` if it exists.
-   - Turn on the Kobo's bluetooth.
-   - Try and open the event device at `$KB_EVDEV` (default `"/dev/input/event3"`). If no device is there, it'll wait 5 seconds after bluetooth up for the keyboard to appear. 
+   - Bluetooth
+   - Keyboard event device selection
+   - fbpad fifo at `/tmp/efbpad/fbpad_fifo`
+   - Logging at `/tmp/efbpad/efbpad.log`
