@@ -62,6 +62,7 @@ To uninstall delete all efbpad's files and directories:
 ## Development 
 
 ### Build
+ - Make sure submodules are pulled. `git submodule update --recursive`
  - Run `make` to produce an update package `KoboRoot.tgz`.
    This requires a cross-compiling environment. The path of least resistance is building and enabling the kobo env from [`koxtoolchain`](https://github.com/koreader/koxtoolchain).
 
