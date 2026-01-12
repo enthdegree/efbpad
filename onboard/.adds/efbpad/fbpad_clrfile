@@ -2,11 +2,11 @@
 color   000000 ffffff
 
 # Basic 16-color palette
-color16 101010 7c7c7c 8e8e8e a0a0a0 686868 747474 868686 b9b9b9
-        525252 7c7c7c 8e8e8e a0a0a0 686868 747474 868686 f7f7f7
+color16 2e3436 a40000 4e9a06 c4a000 3465a4 75507b 0b939b d3d7cf
+        555753 ef2929 8ae234 fce94f 729fcf ad7fa8 00f5e9 eeeeec
 
 # Cursor color
-cursor  ffffff 000000
+cursor  ffffff 000000 
 
 # Border color and width
 border  ffffff 3

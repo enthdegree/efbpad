@@ -34,6 +34,7 @@ if [ ! -p "$FBPAD_FIFO" ]; then
     echo "[efbpad] Failed to create fifo $FBPAD_FIFO."
     unset FBPAD_FIFO
 fi
+echo "[efbpad] Made fifo $FBPAD_FIFO."
 
 # Set up LD_LIBRARY_PATH
 if [ -z "$LD_LIBRARY_PATH" ]; then
@@ -66,7 +67,7 @@ export OLD_FB_ROTA="$(fbdepth -o)"
 fbdepth -d 32 -r 2 # on clara bw: 0,2 = landscape, 3=portrait, 1=upside down
 
 # Start up fbpad
-echo "[efbpad] Starting kbreader, fbpad"
+echo "[efbpad] Starting kbreader with device $EFBPAD_KB, fbpad with cmd \"$EFBPAD_CMD\""
 kbreader $EFBPAD_KB | fbpad $EFBPAD_CMD 
 
 # Cleanup
